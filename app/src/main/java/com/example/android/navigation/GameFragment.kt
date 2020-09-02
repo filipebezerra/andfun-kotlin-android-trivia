@@ -23,6 +23,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.android.navigation.databinding.FragmentGameBinding
 
 class GameFragment : Fragment() {
@@ -97,9 +98,11 @@ class GameFragment : Fragment() {
                         binding.invalidateAll()
                     } else {
                         // We've won!  Navigate to the gameWonFragment.
+                        view.findNavController().navigate(R.id.action_gameFragment_to_gameWonFragment)
                     }
                 } else {
                     // Game over! A wrong answer sends us to the gameOverFragment.
+                    view.findNavController().navigate(R.id.action_gameFragment_to_gameOverFragment)
                 }
             }
         }
@@ -121,6 +124,10 @@ class GameFragment : Fragment() {
         answers = currentQuestion.answers.toMutableList()
         // and shuffle them
         answers.shuffle()
-        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.title_android_trivia_question, questionIndex + 1, numQuestions)
+        (activity as AppCompatActivity).supportActionBar?.title = getString(
+                R.string.title_android_trivia_question,
+                questionIndex + 1,
+                numQuestions
+        )
     }
 }
